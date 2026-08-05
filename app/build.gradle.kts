@@ -101,7 +101,7 @@ fun setOutputFileName(variant: Variant, output: VariantOutputImpl) {
     val abi = output.getFilter(ABI)?.identifier ?: "all"
     val baseVersionName = currentDate()
     val buildTypeSuffix = if (variant.buildType == "release") baseVersionName else "Debug-${baseVersionName}"
-    val baseName = "Pojav-Glow-Worm-${buildTypeSuffix}"
+    val baseName = "BaTLauncher-${buildTypeSuffix}"
 
     output.outputFileName = "${baseName}-${abi}.apk"
 }
