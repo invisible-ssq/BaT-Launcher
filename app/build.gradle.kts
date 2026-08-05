@@ -17,7 +17,7 @@ plugins {
 }
 apply(plugin = "stringfog")
 
-val appPackageName = "net.kdt.pojavlaunch.firefly"
+val appPackageName = "net.kdt.batvisuals.bat"
 val currentVersion = "snowdrop"
 
 var localProperty: Properties? = null
