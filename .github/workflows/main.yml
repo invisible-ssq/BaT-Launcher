@@ -26,7 +26,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Get Jre
+      - name: Get JRE
         uses: dawidd6/action-download-artifact@v3
         with:
           workflow: jrepush.yml
