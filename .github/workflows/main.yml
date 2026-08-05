@@ -34,13 +34,17 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
       - name: Build Debug APK
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME_17_X64 }}
         run: |
-          chmod +x gradlew
+          java -version
           ./gradlew assembleDebug --stacktrace
 
       - name: Build Release APK
+        env:
+          JAVA_HOME: ${{ env.JAVA_HOME_17_X64 }}
         run: |
-          chmod +x gradlew
+          java -version
           ./gradlew assembleRelease --stacktrace
 
       - name: Upload Debug APK
@@ -54,33 +58,3 @@ jobs:
         with:
           name: BaTLauncher-release
           path: app/build/outputs/apk/release/*.apk
-
-      - name: Create Release
-        if: github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            app/build/outputs/apk/debug/*.apk
-            app/build/outputs/apk/release/*.apk
-          tag_name: v1.0.0
-          name: "BaT Launcher v1.0.0"
-          body: |
-            ## BaT Launcher v1.0.0
-            
-            ### Фичи:
-            - Microsoft аккаунты (OAuth2 + Xbox Live)
-            - Ely.by аккаунты
-            - Локальные аккаунты (офлайн)
-            - Менеджер аккаунтов
-            - Автозагрузка Fabric 1.21.4
-            - Автозагрузка BaTVisuals мода
-            - Запуск Minecraft прямо в приложении
-            
-            ### Установка:
-            1. Скачай APK
-            2. Установи
-            3. Запусти → скачай игру (кнопка ⬇)
-            4. Добавь аккаунт
-            5. Играй!
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
