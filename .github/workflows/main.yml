@@ -19,6 +19,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Verify Java
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME"
+          java -version
+
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
@@ -34,18 +39,10 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
       - name: Build Debug APK
-        env:
-          JAVA_HOME: ${{ env.JAVA_HOME_17_X64 }}
-        run: |
-          java -version
-          ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Build Release APK
-        env:
-          JAVA_HOME: ${{ env.JAVA_HOME_17_X64 }}
-        run: |
-          java -version
-          ./gradlew assembleRelease --stacktrace
+        run: ./gradlew assembleRelease --no-daemon
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
