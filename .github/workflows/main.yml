@@ -19,14 +19,28 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Verify Java
-        run: java -version
+      - name: Export JAVA_HOME
+        run: |
+          echo "JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
+          echo "$JAVA_HOME/bin" >> $GITHUB_PATH
+          java -version
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
       - name: Make gradlew executable
         run: chmod +x gradlew
+
+      - name: Write gradle.properties
+        run: |
+          cat > gradle.properties << 'GRADLE_EOF'
+          org.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8
+          org.gradle.configureondemand=false
+          org.gradle.java.home=${{ env.JAVA_HOME }}
+          android.useAndroidX=true
+          android.nonTransitiveRClass=false
+          android.nonFinalResIds=false
+          GRADLE_EOF
 
       - name: Cache Gradle
         uses: actions/cache@v4
